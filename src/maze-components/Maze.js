@@ -8,10 +8,11 @@ import './Maze.css'
 function createRow(n){
     let arr = [];
     for (let i = 0; i < n; i++){
-        arr.push(new Field());
+        arr.push(new Field(i, n));
     }
     return arr;
 }
+
 
 class Maze {
     constructor(m, n) {

@@ -4,6 +4,7 @@ import './Field.css'
 //This function is used in the constructor-method for the initialization of the isWall-variable. It returns a boolean-value based on randomness.
 const randomWall = () => {
     let random= Math.random();
+    console.log(random);
     if (random < 0.5){
         return true;
     } else {
@@ -35,8 +36,11 @@ const createFieldJSX = (wall, player, goal) => {
 
 class Field {
 
-    constructor(){
-        this.isWall = randomWall(); //describes, if the Field contains a Wall or not
+    constructor(x, y){
+        this.xPosition = x;
+        this.yPosition = y;
+        this.isWall = false; //describes, if the Field contains a Wall or not
+        console.log(this.isWall);
         this.containsGoal = false; //describes, if the Goal is actually on this Field
         this.containsPlayer = false; //describes, if the Player is actually on this Field
         this.wallClassName = getDivClassName(this.isWall); //used for the className of the div
@@ -45,7 +49,7 @@ class Field {
     //returns the div that represents the visual Field
     getDivElement() {
         return (
-            <div className={`block-div ${this.wallClassName}`}>
+            <div className={`block-div ${this.wallClassName}`} id={`${this.xPosition}-${this.yPosition}`}>
             </div>
         );
     };

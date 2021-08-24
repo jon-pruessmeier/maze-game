@@ -1,6 +1,9 @@
 #maze{
     display: grid;
-    height: 80vh;
-    width: 90vw;
-    grid-template-columns: repeat(75, 1fr);
+    height: 800px;
+    width: 800px;
+    grid-template-columns: repeat(40, 1fr);
+    border-style: solid;
+    border-width: thick;
+    border-color: blue;
 }

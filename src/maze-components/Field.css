@@ -4,6 +4,9 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    border-style: solid solid solid solid;
+    border-color: blue;
+    border-width: 2px;
 }
 
 .wallDiv{
