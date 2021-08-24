@@ -5,5 +5,5 @@
     grid-template-columns: repeat(40, 1fr);
     border-style: solid;
     border-width: thick;
-    border-color: blue;
+    border-color: black;
 }
