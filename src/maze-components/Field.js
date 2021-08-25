@@ -1,4 +1,4 @@
-import './Field.css'
+import './Field.css';
 /*
 const playerJSX = <p>😁</p>;
 const goalJSX = <p>🔥</p>;
@@ -31,6 +31,7 @@ class Field {
                 "left": true
             },
             "visited": false, //if this field was visited by the maze-generating-algorithm
+            "visitableNeighbours": true,
             "positions": {
                 "X": x, //x-Position of the field in the maze (starting with 0 on the left)
                 "Y": y  //y-Position of the field in the maze (starting with 0 at the top)
@@ -39,6 +40,32 @@ class Field {
             "containsGoal": false, //if the goal is on this field
             "id": id // Format: field-X-Y (e.g. "field-5-9") like in the first line of the constructor
         };
+    };
+
+    //gives back all existing neighbours of the field by recognizing the size of the maze
+    getExistingNeighbours(rows, columns){
+        let possibleDirections = {
+            "top": true,
+            "right": true,
+            "bottom": true,
+            "left": true
+        };
+
+        let positions = this.info.positions;
+        if (positions.Y === 0){
+            possibleDirections.top = false;
+        }
+        if (positions.X === columns){
+            possibleDirections.right = false;
+        }
+        if (positions.Y === rows){
+            possibleDirections.bottom = false;
+        }
+        if (positions.X === 0){
+            possibleDirections.left = false;
+        }
+
+        return possibleDirections;
     };
 
     getWallInfo(){
@@ -92,6 +119,13 @@ class Field {
         }
     }
 
+    getVisitedStatus(){
+        return this.info.visited;
+    }
+
+    setVisited(){
+        this.info.visited = true;
+    }
 
     //returns the div that represents the visual Field
     getDivElement() {

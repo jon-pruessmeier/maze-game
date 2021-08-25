@@ -1,9 +1,5 @@
-/*import Maze from "./Maze";
+import Maze from "./Maze";
 
-let maze = new Maze(100, 100);
+import Field from "./Field.js"
 
-export default maze; */
 
-/*
-This class shall help with creating a good maze! :)
- */

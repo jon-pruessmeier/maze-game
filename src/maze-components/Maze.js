@@ -1,77 +1,95 @@
 import Field from './Field.js'
 import './Maze.css'
 
-
-//adds n-times a Field into an array that represents the rows in the maze
-//the parameter n represents the number of elements in the row and therefore the number columns
-//this function enables to use a 2D-Array within the Maze-class though JavaScript does not provide a 2D-Array
-function createRow(n){
-    let arr = [];
-    for (let i = 0; i < n; i++){
-        arr.push(new Field(i, n));
-    }
-    return arr;
+/*
+This function returns a random element of an array.
+Since often times the arrays used in the Maze-class (especially those for tracking directions) are very short (1-4 elements),
+the randomness of an element will be supported by shuffling the array first.
+ */
+const getRandomElementArray = (array) => {
+    /*
+    //shuffles the array in order to the Fisher-Yates Algorithm
+    //credits: https://medium.com/@nitinpatel_20236/how-to-shuffle-correctly-shuffle-an-array-in-javascript-15ea3f84bfb
+    for(let i = array.length—1; i > 0; i--){
+        const j = Math.floor(Math.random() * i)
+        const temp = array[i]
+        array[i] = array[j]
+        array[j] = temp
+    } */
+    return array[Math.floor(Math.random()*this.length)];
 }
 
+const antiDirections = {
+    "top": "bottom",
+    "right": "left",
+    "bottom": "top",
+    "left": "right"
+}
 
 class Maze {
+
+    createMaze(){
+        this.moveFieldAlgorithm(this.maze[0][0]); //starting the algorithm with the field in the top-left of the maze
+
+        //This code-block assigns a random field in the maze as the field with the player on it.
+        let randomRowIndex = Math.floor(Math.random()*this.rows);
+        let randomColumnIndex = Math.floor(Math.random()*this.columns);
+        this.maze[randomRowIndex][randomColumnIndex].changePlayer();
+
+        //This code-block assigns a random field in the maze as the field with the goal on it.
+        randomRowIndex = Math.floor(Math.random()*this.rows);
+        randomColumnIndex = Math.floor(Math.random()*this.columns);
+        this.maze[randomRowIndex][randomColumnIndex].changeGoal();
+
+    }
+
     constructor(m, n) {
-        this.rows = m; //number of rows in the Maze (and the number of arrays in this.fields)
-        this.columns = n; //number of columns in the Maze (and the number of elements in a subarray of this.fields)
-        this.maze = []; //array that contains subarrays with Fields; it is the array which samples the Fields to a maze
 
+        this.rows = m;
+        this.columns = n;
 
-
-        for (let i = 0; i < this.rows; i++) {
-            let row = createRow(this.columns);
-            this.maze.push(row);
-            /* for (let j = 0; j < row.length; j++) {
-                this.allFieldsJSX.push(row[j].getDivElement());
-            } */
+        this.maze = new Array(m);
+        for (let i = 0; i < m; i++) {
+            this.maze[i] = new Array(n);
         }
-        /*
+        for (let i = 0; i < m; i++){
+            for (let j = 0; j < n; j++){
+                this.maze[i][j] = new Field(j, i); //j is the x-Position, i is the y-Position
+            }
+        }
+        //tracks the coordinates of the last visited fields
+        //is used as a stack with the push- and shift-methods
+        this.lastFieldsCoordinates = [];
 
-        /*
-        This code-block assigns a random field in the maze as the field with the player on it.
-        Since JavaScript does not provide 2d arrays, the field has to be saved in a local variable with intermediate steps.
-        After that, the original variable has to be replaced with the local variable.
-        This also happens with intermediate steps.
-         */
-        /*
+        //tracks the number of all fields in the maze and gets decremented by every visited field by the algorithm
+        //this variable is the termination condition of the recursion in the moveFieldAlgorithm-method
+        this.counterUnvisitedFields = this.rows * this.columns;
 
-        <---HIER IST IRGENDWO EIN FEHLER!!!--->
-        let randomRowIndex = Math.floor(Math.random()*this.rows.length);
-        let randomColumnIndex = Math.floor(Math.random()*this.columns.length);
-        let randomRow = this.maze[randomRowIndex];
-        let randomField = randomRow[randomColumnIndex];
-        randomField.info.containsPlayer = true;
-        randomRow[randomColumnIndex] = randomField;
-        this.maze[randomRowIndex] = randomRow;
-         */
+        //this.createMaze();
 
-        /*
-        This code-block does the same as the block above just for the assignment of the goal in the maze.
-         */
-
-        /*
-        randomRowIndex = Math.floor(Math.random()*this.rows.length);
-        randomColumnIndex = Math.floor(Math.random()*this.columns.length);
-        randomRow = this.maze[randomRowIndex];
-        randomField = randomRow[randomColumnIndex];
-        randomField.info.containsGoal = true;
-        randomRow[randomColumnIndex] = randomField;
-        this.maze[randomRowIndex] = randomRow;
-         */
-
-
-        this.allFieldsJSX=[]; //contains all fields of all subarrays
-        for (let i = 0; i < this.maze.length; i++){
-            let actualRow = this.maze[i];
-            for (let j = 0; j < actualRow.length; j++){
-                this.allFieldsJSX.push(actualRow[j].getDivElement());
+        for(let i = 0; i < this.maze.length; i++){
+            for (let j = 0; j < this.maze[i].length; j++){
+                console.log(`Koordinaten: X = ${this.maze[i][j].info.positions.X} und Y = ${this.maze[i][j].info.positions.Y}`);
             }
         }
 
+        /*
+        //This code-block assigns a random field in the maze as the field with the player on it.
+        let randomRowIndex = Math.floor(Math.random()*this.rows);
+        let randomColumnIndex = Math.floor(Math.random()*this.columns);
+        this.maze[randomRowIndex][randomColumnIndex].changePlayer();
+
+        //This code-block assigns a random field in the maze as the field with the goal on it.
+        randomRowIndex = Math.floor(Math.random()*this.rows);
+        randomColumnIndex = Math.floor(Math.random()*this.columns);
+        this.maze[randomRowIndex][randomColumnIndex].changeGoal();
+        */
+        this.allFieldsJSX = [];
+        for (let i = 0; i < this.maze.length; i++){
+            for (let j = 0; j < this.maze[i].length; j++){
+                this.allFieldsJSX.push(this.maze[i][j].getDivElement());
+            }
+        }
 
         this.mazeJSX = (
             <div id="maze">
@@ -80,6 +98,127 @@ class Maze {
         );
 
     }
+
+
+    //modifies an object of directions that are movable (= they would not cause an IndexOutOufBoundsException) to an object
+    //containing additional information about neighbours that are unvisited
+    getUnvisitedNeighbors(movableDirections, field){
+        let x = field.info.positions.X;
+        let y = field.info.positions.Y;
+        if (movableDirections.top){
+            if (!this.maze[y-1][x].getVisitedStatus()){
+                movableDirections.top = false;
+            }
+        }
+        if (movableDirections.right){
+            if (!this.maze[y][x+1].getVisitedStatus()){
+                movableDirections.right = false;
+            }
+        }
+        if (movableDirections.bottom){
+            if (!this.maze[y+1][x].getVisitedStatus()){
+                movableDirections.bottom = false;
+            }
+        }
+        if (movableDirections.left){
+            if (!this.maze[y][x-1].getVisitedStatus()){
+                movableDirections.left = false;
+            }
+        }
+        return movableDirections;
+    }
+
+    countMovableDirections(movableDirections){
+        let counter = 0;
+        if (movableDirections.top){
+            counter++;
+        }
+        if (movableDirections.right){
+            counter++;
+        }
+        if (movableDirections.bottom){
+            counter++;
+        }
+        if (movableDirections.left){
+            counter++;
+        }
+        return counter++;
+    }
+
+
+    //accepts a direction and a field and returns an array with the coordinates (format [x, y]) of the neighbouring field
+    getNewCoordinates(direction, actualField){
+        let x = actualField.info.positions.x;
+        let y = actualField.info.positions.y;
+        if (direction === "top"){
+            return [y-1, x];
+        } else if (direction === "right"){
+            return [y, x+1];
+        } else if (direction === "bottom"){
+            return [y+1, x];
+        } else if (direction === "left"){
+            return  [y, x-1];
+        }
+    }
+
+
+    /*
+    This method is the heart of the maze-generation. It takes a field as parameter, chooses a next field by randomness,
+    deletes the wall between the actual and the next field and then visits the next field by recursion. If the field has no visitable
+    neighbours, it returns to the last visited field until a field has a visitable neighbour. The recursion of this method stops when
+    the counterUnvisitedFields-variable of the Maze-class is zero, because then the creation of the maze has finished.
+     */
+
+    moveFieldAlgorithm(field){
+        if (field.info.visited){
+            field.setVisited();
+            this.counterUnvisitedFields--;
+        }
+
+
+        //creating the variable movableDirections that keeps track of every possible direction
+        //(by regarding the visited-status of neighbouring fields and IndexOutOfBoundsExceptions)
+        let movableDirections = field.getExistingNeighbours(this.rows, this.columns);
+        movableDirections = this.getUnvisitedNeighbors(movableDirections, field);
+        let counterDirections = this.countMovableDirections(movableDirections);
+
+        if (counterDirections > 0){ //counterDirections > 0 means that this field has neighbouring fields that are possible to visit
+
+            /*
+            The following code-block generates the coordinates of the next field for the algorithm by getting a random possible direction
+             */
+            let directionsArray = Object.keys(movableDirections); // directions is an array that stores every available direction of the movableDirection-object
+            let direction = getRandomElementArray(directionsArray);
+            let nextFieldCoordinates = this.getNewCoordinates(direction, field);
+            let nextFieldX = nextFieldCoordinates[0];
+            let nextFieldY = nextFieldCoordinates[1];
+
+            /*
+            The following code-block actualizes the wall-info of the actual and the next field in order to delete the existing wall
+             */
+            field.info.walls.direction = false;
+            let antiDirection = antiDirections.direction;
+            this.maze[nextFieldY][nextFieldX].info.walls.antiDirection = false;
+            let coordinatesActualField = [field.info.positions.X, field.info.positions.Y];
+            this.lastFieldsCoordinates.push(coordinatesActualField); //saving the actual coordinates or the backtracking algorithm
+
+            if (this.counterUnvisitedFields > 0){
+                this.moveFieldAlgorithm(this.maze[nextFieldY][nextFieldX]);
+            }
+
+
+        } else {
+            let coordinatesLastField = this.lastFieldsCoordinates.shift(); //array with the format [x,y]
+            //returning back to the last visited fields until one has 1 or more possible neighbouring field
+            this.moveFieldAlgorithm(this.maze[coordinatesLastField[1]][coordinatesLastField[0]]);
+        }
+
+
+
+    }
+
+
+
 
     getDivElement(){
         return this.mazeJSX;
