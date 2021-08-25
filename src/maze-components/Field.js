@@ -31,7 +31,6 @@ class Field {
                 "left": true
             },
             "visited": false, //if this field was visited by the maze-generating-algorithm
-            "visitableNeighbours": true,
             "positions": {
                 "X": x, //x-Position of the field in the maze (starting with 0 on the left)
                 "Y": y  //y-Position of the field in the maze (starting with 0 at the top)
