@@ -2,7 +2,7 @@
     display: grid;
     height: 800px;
     width: 800px;
-    grid-template-columns: repeat(5, 1fr);
+    grid-template-columns: repeat(40, 1fr);
     border-style: solid;
     border-width: thick;
     border-color: black;

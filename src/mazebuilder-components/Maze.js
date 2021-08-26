@@ -30,35 +30,8 @@ class Maze {
                 this.maze[i][j] = new Field(j, i); //j is the x-Position, i is the y-Position
             }
         }
-        //tracks the coordinates of the last visited fields
-        //is used as a stack with the push- and shift-methods
-        this.lastFieldsCoordinates = [];
 
         this.createMaze();
-
-        /*
-        //This code-block assigns a random field in the maze as the field with the player on it.
-        let randomRowIndex = Math.floor(Math.random()*this.rows);
-        let randomColumnIndex = Math.floor(Math.random()*this.columns);
-        this.maze[randomRowIndex][randomColumnIndex].changePlayer();
-
-        //This code-block assigns a random field in the maze as the field with the goal on it.
-        randomRowIndex = Math.floor(Math.random()*this.rows);
-        randomColumnIndex = Math.floor(Math.random()*this.columns);
-        this.maze[randomRowIndex][randomColumnIndex].changeGoal();
-        */
-        this.allFieldsJSX = [];
-        for (let i = 0; i < this.maze.length; i++){
-            for (let j = 0; j < this.maze[i].length; j++){
-                this.allFieldsJSX.push(this.maze[i][j].getDivElement());
-            }
-        }
-
-        this.mazeJSX = (
-            <div id="maze">
-                {this.allFieldsJSX}
-            </div>
-        );
 
     }
 
@@ -144,15 +117,6 @@ class Maze {
         }
     }
 
-    //deletes all walls that are destructed during the maze-creation
-    deleteWalls(){
-        for (let i = 0; i < this.maze.length; i++){
-            for (let j = 0; j < this.maze[i].length; j++){
-                this.maze[i][j].actualizeWalls();
-            }
-        }
-    }
-
     createMaze(){
         //tracks the coordinates of the last visited fields
         //is used as a stack with the push- and pop-methods
@@ -173,8 +137,6 @@ class Maze {
         randomRowIndex = Math.floor(Math.random()*this.rows);
         randomColumnIndex = Math.floor(Math.random()*this.columns);
         this.maze[randomRowIndex][randomColumnIndex].changeGoal();
-
-        //document.addEventListener('DOMContentLoaded', this.deleteWalls(), false);
 
     }
 
@@ -251,8 +213,28 @@ class Maze {
 
 
     }
+
+    createJSXElement(){
+        let mazeJSX;
+        let elementsJSX = [];
+        for (let i = 0; i < this.maze.length; i++){
+            for (let j = 0; j < this.maze[i].length; j++){
+                elementsJSX.push(this.maze[i][j].getDivElement());
+            }
+        }
+
+        mazeJSX = (
+            <div id="maze">
+                {elementsJSX}
+            </div>
+        );
+
+        return mazeJSX;
+
+    }
+
     getDivElement(){
-        return this.mazeJSX;
+        return this.createJSXElement();
     }
 }
 

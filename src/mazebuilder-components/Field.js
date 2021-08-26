@@ -1,13 +1,4 @@
 import './Field.css';
-/*
-const playerJSX = <p>😁</p>;
-const goalJSX = <p>🔥</p>;
-
-const createFieldJSX = (wall, player, goal) => {
-    if (wall){
-
-}
-*/
 
 const playerJSX = (<div id="player"></div>);
 const goalJSX = (<div id="goal"></div>);
@@ -67,41 +58,6 @@ class Field {
         return possibleDirections;
     };
 
-    getWallInfo(){
-        return this.info.walls;
-    };
-
-
-    //actualizes the border-style-properties of the field by checking the boolean-values in the walls-object in this.info
-    actualizeWalls(){
-        let walls = this.info.walls;
-        let fieldCSS = document.getElementById(this.info.id);
-        console.log(fieldCSS);
-        if (!walls.top){
-            fieldCSS.style.borderTopStyle = "none";
-        } else {
-            fieldCSS.style.borderTopStyle = "solid";
-        }
-
-        if (!walls.right){
-            fieldCSS.style.borderRightStyle = "none";
-        } else {
-            fieldCSS.style.borderRightStyle = "solid";
-        }
-
-        if (!walls.bottom){
-            fieldCSS.style.borderBottomStyle = "none";
-        } else {
-            fieldCSS.style.borderBottomStyle = "solid";
-        }
-
-        if (!walls.left){
-            fieldCSS.style.borderLeftStyle = "none";
-        } else {
-            fieldCSS.style.borderLeftStyle = "solid";
-        }
-    };
-
     changePlayer(){
         if(this.info.containsPlayer){
             this.info.containsPlayer = false;
@@ -126,10 +82,59 @@ class Field {
         this.info.visited = true;
     }
 
+    //This method return information about the border-style of each wall of the field-div
+    getBorderStyle(){
+        let wallInfo = this.info.walls;
+        let top = wallInfo.top;
+        let right = wallInfo.right;
+        let bottom = wallInfo.bottom;
+        let left = wallInfo.left;
+        let borderStyle = [];
+
+        if (top){
+            borderStyle.push("solid");
+        } else {
+            borderStyle.push("none");
+        }
+
+        if (right){
+            borderStyle.push("solid");
+        } else {
+            borderStyle.push("none");
+        }
+
+        if (bottom){
+            borderStyle.push("solid");
+        } else {
+            borderStyle.push("none");
+        }
+
+        if (left){
+            borderStyle.push("solid");
+        } else {
+            borderStyle.push("none");
+        }
+
+        return borderStyle;
+
+    }
+
     //returns the div that represents the visual Field
     getDivElement() {
+        let wallInfoBorders = this.getBorderStyle();
+        let top = wallInfoBorders[0];
+        let right = wallInfoBorders[1];
+        let bottom = wallInfoBorders[2];
+        let left = wallInfoBorders[3];
+
+        let borders = {
+            borderStyle: `${top} ${right} ${bottom} ${left}`,
+            borderWidth: "1px"
+        }
+        console.log(borders);
+
         return (
-        <div className={`field`} id={this.info.id}>
+        <div className={`field`} id={this.info.id} style={borders}>
             {this.info.containsPlayer ? playerJSX : emptyJSX}
             {this.info.containsGoal ? goalJSX : emptyJSX}
         </div>
