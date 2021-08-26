@@ -1,0 +1,40 @@
+.field{
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: navajowhite;
+
+    /*
+    border-top-style: solid;
+    border-right-style: solid;
+    border-bottom-style: solid;
+    border-left-style: solid;
+
+
+    border-color: black;
+    border-width: 1px;
+     */
+}
+
+#player{
+    width: 75%;
+    height: 75%;
+    margin: 0;
+    padding: 0;
+    background-color: green;
+}
+
+#goal{
+    width: 75%;
+    height: 75%;
+    margin: 0;
+    padding: 0;
+    background-color: red;
+}
+
+.empty{
+    height: 0;
+    width: 0;
+}

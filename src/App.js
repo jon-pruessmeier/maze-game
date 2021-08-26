@@ -1,11 +1,6 @@
 import './App.css';
-import Maze from "./maze-components/Maze";
 
-let maze = new Maze(75, 30);
-
-
-
-function App() {
+function App(maze) {
   return (
     <div className="App">
         {maze.getDivElement()}

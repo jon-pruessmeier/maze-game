@@ -1,6 +1,0 @@
-#maze{
-    display: grid;
-    height: 80vh;
-    width: 90vw;
-    grid-template-columns: repeat(75, 1fr);
-}
