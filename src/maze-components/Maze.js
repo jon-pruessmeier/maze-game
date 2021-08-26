@@ -1,21 +1,8 @@
 import Field from './Field.js'
 import './Maze.css'
 
-/*
-This function returns a random element of an array.
-Since often times the arrays used in the Maze-class (especially those for tracking directions) are very short (1-4 elements),
-the randomness of an element will be supported by shuffling the array first.
- */
-const getRandomElementArray = (array) => {
-    /*
-    //shuffles the array in order to the Fisher-Yates Algorithm
-    //credits: https://medium.com/@nitinpatel_20236/how-to-shuffle-correctly-shuffle-an-array-in-javascript-15ea3f84bfb
-    for(let i = array.length—1; i > 0; i--){
-        const j = Math.floor(Math.random() * i)
-        const temp = array[i]
-        array[i] = array[j]
-        array[j] = temp
-    } */
+//This function returns a random element of an array.
+const getRandomElementOfArray = (array) => {
     return array[Math.floor(Math.random()*array.length)];
 }
 
@@ -79,37 +66,31 @@ class Maze {
     //modifies an object of directions that are movable (= they would not cause an IndexOutOufBoundsException) to an object
     //containing additional information about neighbours that are unvisited
     getUnvisitedNeighbors(movableDirections, field){
+        console.log("Vor getUnvistedNeighbors: ");
         console.log(movableDirections);
         let x = field.info.positions.X;
         let y = field.info.positions.Y;
         if (movableDirections.top){
-            console.log("TOP");
-            if (this.maze[y-1][x].getVisitedStatus()  === false){
-                console.log(this.maze[y-1][x]);
+            if (this.maze[y-1][x].getVisitedStatus()){
                 movableDirections.top = false;
             }
         }
         if (movableDirections.right){
-            console.log("RIGHT");
-            if (this.maze[y][x+1].getVisitedStatus() === false){
-                console.log(this.maze[y][x+1]);
+            if (this.maze[y][x+1].getVisitedStatus()){
                 movableDirections.right = false;
             }
         }
         if (movableDirections.bottom){
-            console.log("BOTTOM");
-            if (this.maze[y+1][x].getVisitedStatus()  === false){
-                console.log(this.maze[y+1][x]);
+            if (this.maze[y+1][x].getVisitedStatus()){
                 movableDirections.bottom = false;
             }
         }
         if (movableDirections.left){
-            console.log("LEFT");
-            if (this.maze[y][x-1].getVisitedStatus()  === false){
-                console.log(this.maze[y][x-1]);
+            if (this.maze[y][x-1].getVisitedStatus()){
                 movableDirections.left = false;
             }
         }
+        console.log("Nach getUnvisitedNeighbours:");
         console.log(movableDirections);
         return movableDirections;
     }
@@ -153,25 +134,33 @@ class Maze {
         let x = actualField.info.positions.X;
         let y = actualField.info.positions.Y;
         if (direction === "top"){
-            return [y-1, x];
+            return [x, y-1];
         } else if (direction === "right"){
-            return [y, x+1];
+            return [x+1, y];
         } else if (direction === "bottom"){
-            return [y+1, x];
+            return [x, y+1];
         } else if (direction === "left"){
-            return  [y, x-1];
+            return  [x-1, y];
+        }
+    }
+
+    //deletes all walls that are destructed during the maze-creation
+    deleteWalls(){
+        for (let i = 0; i < this.maze.length; i++){
+            for (let j = 0; j < this.maze[i].length; j++){
+                this.maze[i][j].actualizeWalls();
+            }
         }
     }
 
     createMaze(){
         //tracks the coordinates of the last visited fields
-        //is used as a stack with the push- and shift-methods
+        //is used as a stack with the push- and pop-methods
         let lastFieldsCoordinates = new Array();
 
         //tracks the number of all fields in the maze and gets decremented by every visited field by the algorithm
         //this variable is the termination condition of the recursion in the moveFieldAlgorithm-method
         let counterUnvisitedFields = this.rows * this.columns;
-        console.log("Hallo " + counterUnvisitedFields);
 
         this.moveFieldAlgorithm(this.maze[0][0], lastFieldsCoordinates, counterUnvisitedFields); //starting the algorithm with the field in the top-left of the maze
 
@@ -184,6 +173,8 @@ class Maze {
         randomRowIndex = Math.floor(Math.random()*this.rows);
         randomColumnIndex = Math.floor(Math.random()*this.columns);
         this.maze[randomRowIndex][randomColumnIndex].changeGoal();
+
+        //document.addEventListener('DOMContentLoaded', this.deleteWalls(), false);
 
     }
 
@@ -198,13 +189,13 @@ class Maze {
      */
 
     moveFieldAlgorithm(field, lastFieldsCoordinates, counterUnvisitedFields){
+        console.log("########################################");
+        console.log("Turn-number: " + counterUnvisitedFields);
         console.log(field);
-        console.log("davor: " + counterUnvisitedFields);
 
         if (field.info.visited === false){
             field.setVisited();
             counterUnvisitedFields--;
-            console.log(counterUnvisitedFields + " danach")
         }
 
 
@@ -213,6 +204,7 @@ class Maze {
         let movableDirections = field.getExistingNeighbours(this.rows, this.columns);
         movableDirections = this.getUnvisitedNeighbors(movableDirections, field);
         let counterDirections = this.countMovableDirections(movableDirections);
+        console.log("CounterDirections: " + counterDirections);
 
         if (counterDirections > 0){ //counterDirections > 0 means that this field has neighbouring fields that are possible to visit
 
@@ -220,22 +212,26 @@ class Maze {
             //The following code-block generates the coordinates of the next field for the algorithm by getting a random possible direction
 
             let directionsArray = this.getDirectionsArray(movableDirections); // directions is an array that stores every available direction of the movableDirection-object
-            let direction = getRandomElementArray(directionsArray);
+            let direction = getRandomElementOfArray(directionsArray);
             let nextFieldCoordinates = this.getNewCoordinates(direction, field);
             let nextFieldX = nextFieldCoordinates[0];
             let nextFieldY = nextFieldCoordinates[1];
-            console.log(`${nextFieldY} + ${nextFieldX}`);
+            console.log("X: " + field.info.positions.X);
+            console.log("Y: " + field.info.positions.Y);
+
+            let coordinatesActualField = [field.info.positions.X, field.info.positions.Y];
+            lastFieldsCoordinates.push(coordinatesActualField); //saving the actual coordinates or the backtracking algorithm
+
+            console.log("Direction: " + direction);
+            console.log(`NextFieldCoordinates: ${nextFieldCoordinates}`);
 
 
             //The following code-block actualizes the wall-info of the actual and the next field in order to delete the existing wall
             field.info.walls[direction] = false;
             let antiDirection = antiDirections[direction];
+            console.log("Antidirection: " + antiDirection);
             this.maze[nextFieldY][nextFieldX].info.walls[antiDirection] = false;
-            console.log("X: " + field.info.positions.X);
-            console.log("Y: " + field.info.positions.Y);
-            let coordinatesActualField = [field.info.positions.X, field.info.positions.Y];
-            console.log(coordinatesActualField);
-            lastFieldsCoordinates.push(coordinatesActualField); //saving the actual coordinates or the backtracking algorithm
+
 
             if (counterUnvisitedFields > 0){
                 this.moveFieldAlgorithm(this.maze[nextFieldY][nextFieldX], lastFieldsCoordinates, counterUnvisitedFields);
@@ -244,8 +240,8 @@ class Maze {
 
         } else {
             if (counterUnvisitedFields > 0){
-                let coordinatesLastField = lastFieldsCoordinates.shift(); //array with the format [x,y]
-                console.log(lastFieldsCoordinates);
+                let coordinatesLastField = lastFieldsCoordinates.pop(); //array with the format [x,y]
+                console.log("DEADEND!");
                 //returning back to the last visited fields until one has 1 or more possible neighbouring field
                 this.moveFieldAlgorithm(this.maze[coordinatesLastField[1]][coordinatesLastField[0]], lastFieldsCoordinates, counterUnvisitedFields);
             }

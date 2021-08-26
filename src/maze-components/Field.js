@@ -9,9 +9,9 @@ const createFieldJSX = (wall, player, goal) => {
 }
 */
 
-const playerJSX = <div id="player"></div>;
-const goalJSX = <div id="goal"></div>;
-const emptyJSX = <div className="empty"></div>;
+const playerJSX = (<div id="player"></div>);
+const goalJSX = (<div id="goal"></div>);
+const emptyJSX = (<div className="empty"></div>);
 
 class Field {
 
@@ -54,10 +54,10 @@ class Field {
         if (positions.Y === 0){
             possibleDirections.top = false;
         }
-        if (positions.X === columns){
+        if (positions.X === columns - 1){
             possibleDirections.right = false;
         }
-        if (positions.Y === rows){
+        if (positions.Y === rows - 1){
             possibleDirections.bottom = false;
         }
         if (positions.X === 0){
@@ -76,7 +76,7 @@ class Field {
     actualizeWalls(){
         let walls = this.info.walls;
         let fieldCSS = document.getElementById(this.info.id);
-
+        console.log(fieldCSS);
         if (!walls.top){
             fieldCSS.style.borderTopStyle = "none";
         } else {
