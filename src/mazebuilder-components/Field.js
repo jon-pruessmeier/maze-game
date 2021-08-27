@@ -3,6 +3,7 @@ import './Field.css';
 const playerJSX = (<div id="player"></div>);
 const goalJSX = (<div id="goal"></div>);
 const emptyJSX = (<div className="empty"></div>);
+const algoJSX = (<div id="algo"></div>);
 
 class Field {
 
@@ -10,6 +11,7 @@ class Field {
 
         //creating a variable for the info-object, since template-strings are not available in JSON
         let id = `field-${x}-${y}`;
+        this.algo = false; //tracks if the algorithm is actually on this field
 
         //object with every important information about the field
         //the constructor sets the default values for all containing information
@@ -134,7 +136,8 @@ class Field {
         console.log(borders);
 
         return (
-        <div className={`field`} id={this.info.id} style={borders}>
+        <div className={`field`} id={this.info.id} key={this.info.id} style={borders}>
+            {this.algo ? algoJSX: emptyJSX}
             {this.info.containsPlayer ? playerJSX : emptyJSX}
             {this.info.containsGoal ? goalJSX : emptyJSX}
         </div>
