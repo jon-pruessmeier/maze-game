@@ -27,11 +27,24 @@
 }
 
 #goal{
+    width: 90%;
+    height: 90%;
+    margin: 0;
+    padding: 0;
+    background-color: red;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+
+
+#algo{
     width: 75%;
     height: 75%;
     margin: 0;
     padding: 0;
-    background-color: red;
+    background-color: green;
 }
 
 .empty{

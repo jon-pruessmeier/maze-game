@@ -1,15 +1,12 @@
 import './Field.css';
 
-const playerJSX = (<div id="player"></div>);
-const goalJSX = (<div id="goal"></div>);
-const emptyJSX = (<div className="empty"></div>);
-
 class Field {
 
     constructor(x, y){ //x and y are the positions of the field in the maze
 
         //creating a variable for the info-object, since template-strings are not available in JSON
         let id = `field-${x}-${y}`;
+        this.algo = false; //tracks if the algorithm is actually on this field
 
         //object with every important information about the field
         //the constructor sets the default values for all containing information
@@ -131,14 +128,30 @@ class Field {
             borderStyle: `${top} ${right} ${bottom} ${left}`,
             borderWidth: "1px"
         }
-        console.log(borders);
 
-        return (
-        <div className={`field`} id={this.info.id} style={borders}>
-            {this.info.containsPlayer ? playerJSX : emptyJSX}
-            {this.info.containsGoal ? goalJSX : emptyJSX}
-        </div>
-        );
+        const playerJSX = (<div id="player"></div>);
+        const goalJSX = (<div id="goal"></div>);
+        const emptyJSX = (<div className="empty"></div>);
+
+        let div;
+        if (this.info.containsPlayer && this.info.containsGoal){
+            div = (
+                <div className={`field win`} id={this.info.id} key={this.info.id} style={borders}>
+                        <div id="goal">
+                            <div id="player"></div>
+                        </div>
+                </div>
+            );
+        } else {
+            div = (
+                <div className={`field`}  id={this.info.i} key={this.info.id} style={borders}>
+                    {this.info.containsPlayer ? playerJSX : emptyJSX}
+                    {this.info.containsGoal ? goalJSX : emptyJSX}
+                </div>
+            );
+        }
+
+        return div;
     }
 }
 
