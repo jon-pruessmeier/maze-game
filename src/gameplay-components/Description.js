@@ -1,3 +1,5 @@
+//info: CSS-properties are defined in GameScreen.css
+
 const Description = (
         <div className={"description"} key={"description"}>
             <h2>The Maze Game by Jón Prüßmeier</h2>

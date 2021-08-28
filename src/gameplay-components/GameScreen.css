@@ -19,6 +19,16 @@ button{
     margin: 3px;
 }
 
+#playableMaze{
+    display: grid;
+    height: 700px;
+    width: 700px;
+    grid-template-columns: repeat(20, 1fr);
+    border-style: solid;
+    border-width: thick;
+    border-color: black;
+}
+
 .description{
     margin: 0;
     padding: 0;

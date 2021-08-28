@@ -17,19 +17,6 @@ class GameScreen {
         this.playableMaze = new PlayableMaze(20, 20);
 
 
-        this.checkWin = () => {
-            //checks if the player is on the same field as the goal (then the div of the field has the additional className "win"
-            let winner = document.getElementsByClassName("win");
-            console.log(winner);
-            console.log(winner.length);
-            if (winner.length > 0){
-                setTimeout(() => {
-                    alert("You won!");
-                }, 500);
-            }
-        }
-
-
         this.up = (e) => {
             this.playableMaze.play("up");
             this.mazeDiv = this.playableMaze.getDivElement();
@@ -79,7 +66,20 @@ class GameScreen {
         return this.elementJSX;
     }
 
-
+    checkWin = () => {
+        setTimeout(() => {
+            //checks if the player is on the same field as the goal (then the div of the field has the additional className "win"
+            let winner = document.getElementsByClassName("win");
+            console.log(winner);
+            console.log(winner.length);
+            if (winner.length > 0) {
+                let okay = window.confirm("You won! Do you want to play again?");
+                if (okay){
+                    this.refresh();
+                }
+            }
+        }, 500);
+    }
 
     createButtonDiv(){
         let div = (
@@ -104,9 +104,12 @@ class GameScreen {
             this.getDiv(),
             document.getElementById("root")
         );
+        this.checkWin();
+    }
 
-        console.log(this.playableMaze.arrayJSX);
-        //this.checkWin();
+    refresh(){
+        this.playableMaze = new PlayableMaze(20,20);
+        this.render();
     }
 
 }

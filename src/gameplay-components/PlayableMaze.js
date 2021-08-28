@@ -2,6 +2,9 @@ import Maze from "../mazebuilder-components/Maze";
 import React from "react";
 import ReactDOM from "react-dom";
 
+//info: CSS-properties are defined in GameScreen.css
+
+
 class PlayableMaze extends Maze{
     constructor(m, n, partialMaze) {
         super(m, n, partialMaze);
@@ -67,7 +70,7 @@ class PlayableMaze extends Maze{
         }
 
         mazeJSX = (
-            <div id="maze" key={"playableMaze"}>
+            <div id="playableMaze" key={"playableMaze"}>
                 {elementsJSX}
             </div>
         );
