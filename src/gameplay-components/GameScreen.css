@@ -7,42 +7,69 @@
     flex-direction: row;
     justify-content: center;
     align-items: center;
+    /*
     background-color: steelblue;
+    background-color: midnightblue;
+     */
+    background-color: papayawhip;
+
+}
+
+#playableMaze, .description {
+    /*
+border-color: darkgrey;
+ border-color: black;
+     */
+
+
+
+}
+
+h2, h4{
+    margin: 6px;
+    font-family: 'Kaisei Decol', serif;
 }
 
 p{
+    margin: 4px 10px;
     padding: 1px;
-    margin: 2px;
+    font-family: 'Kaisei Decol', serif;
+    font-size: 1.02em;
 }
 
 button{
-    margin: 3px;
+    margin: 4px;
 }
 
+
+/*
+The CSS-properties of the fields are defined in src/mazebuilder-components/Field.css
+ */
 #playableMaze{
     display: grid;
     height: 700px;
     width: 700px;
     grid-template-columns: repeat(20, 1fr);
     border-style: solid;
-    border-width: thick;
-    border-color: black;
+    border-width: 8px;
 }
 
 .description{
     margin: 0;
     padding: 0;
-    width: 400px;
-    height: 500px;
+    width: 450px;
+    height: fit-content;
     border-style: solid;
-    background-color: white;
-    opacity: 0.8;
+    border-width: 4px;
+    background-color: floralwhite;
+    text-align: justify;
+
 }
 
 .mazeContainer{
-    margin: 0;
+    margin: 25px;
     padding: 0;
-    width: 750px;
+    width: fit-content;
     height: 100%;
     display: flex;
     justify-content: center;
@@ -56,8 +83,7 @@ button{
     justify-content: center;
     align-items: center;
     flex-direction: row;
-    height: 300px;
-    width: 400px;
+    width: fit-content;
 
 }
 
@@ -65,7 +91,7 @@ button{
     margin: 0;
     padding: 0;
     height: 100%;
-    width: 1fr;
+    width: fit-content;
     display: flex;
     justify-content: flex-end;
     align-items: center;
@@ -75,7 +101,7 @@ button{
     margin: 0;
     padding: 0;
     height: 100%;
-    width: 1fr;
+    width: fit-content;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -86,9 +112,11 @@ button{
     margin: 0;
     padding: 0;
     height: 100%;
-    width: 1fr;
+    width: fit-content;
     display: flex;
     justify-content: flex-start;
     align-items: center;
 }
+
+
 

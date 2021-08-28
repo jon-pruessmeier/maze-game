@@ -31,14 +31,45 @@ class Maze {
             }
         }
 
+        this.deleteWallsAtBorders();
+
+        /*
+        For the Visualization-Feature:
+
         this.arrayJSX = [];
         this.arrayJSX.push(this.getDivElement());
+         */
+
 
         this.createMaze();
 
 
     }
 
+    //deletes all borders of the fields that are at the border of the maze (e.g. the top-border of the fields in the first row)
+    //if these borders won't be deleted, a visual effect of double-borders happens at the borders of the maze
+    deleteWallsAtBorders(){
+        //deleting the walls at the top-border:
+        for (let i = 0; i < this.maze[0].length; i++){
+            this.maze[0][i].info.walls.top = false;
+        }
+
+        //deleting the walls at the right-border:
+        for (let i = 0; i < this.maze.length; i++){
+            this.maze[i][this.maze[i].length - 1].info.walls.right = false;
+        }
+
+        //deleting the walls at the bottom-border:
+        for (let i = 0; i < this.maze.length; i++){
+            this.maze[this.maze.length - 1][i].info.walls.bottom = false;
+        }
+
+        //deleting the walls at the left-border:
+        for (let i = 0; i < this.maze[0].length; i++){
+            this.maze[i][0].info.walls.bottom = false;
+        }
+
+    }
 
     //modifies an object of directions that are movable (= they would not cause an IndexOutOufBoundsException) to an object
     //containing additional information about neighbours that are unvisited
@@ -157,9 +188,13 @@ class Maze {
             this.counterUnvisitedFields--;
         }
 
+        /*
+        This code-block is also for the planned Visualization-feature:
+
         field.algo = true;
         this.arrayJSX.push(this.getDivElement());
         field.algo = false;
+         */
 
 
         //creating the variable movableDirections that keeps track of every possible direction
