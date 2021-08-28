@@ -21,6 +21,10 @@ const Description = (
                 it steps back the last visited fields until a field has at least one unvisited adjacent field again.
                 This is how the dead ends in the maze are created. The termination condition of the recursion is a counter of all unvisited fields.
             </p>
+            <p>
+                See also:  <a href="https://en.wikipedia.org/wiki/Backtracking#:~:text=Backtracking%20is%20a%20general%20algorithm,completed%20to%20a%20valid%20solution.">
+                wikipedia.org/wiki/Backtracking</a>
+            </p>
         </div>
 
 );
