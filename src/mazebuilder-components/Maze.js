@@ -15,7 +15,7 @@ const antiDirections = {
 
 class Maze {
 
-    constructor(m, n, partialMaze) { //partialMaze is a boolean which defines if this maze is a PartialMaze
+    constructor(m, n) { //partialMaze is a boolean which defines if this maze is a PartialMaze
         this.z = 1;
 
         this.rows = m;
@@ -30,9 +30,11 @@ class Maze {
                 this.maze[i][j] = new Field(j, i); //j is the x-Position, i is the y-Position
             }
         }
-        if(!partialMaze){
-            this.createMaze();
-        }
+
+        this.arrayJSX = [];
+        this.arrayJSX.push(this.getDivElement());
+
+        this.createMaze();
 
 
     }
@@ -155,6 +157,10 @@ class Maze {
             this.counterUnvisitedFields--;
         }
 
+        field.algo = true;
+        this.arrayJSX.push(this.getDivElement());
+        field.algo = false;
+
 
         //creating the variable movableDirections that keeps track of every possible direction
         //(by regarding the visited-status of neighbouring fields and IndexOutOfBoundsExceptions)
@@ -196,7 +202,6 @@ class Maze {
             }
 
         }
-
 
 
     }

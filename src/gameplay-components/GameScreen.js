@@ -2,19 +2,19 @@ import ReactDOM from "react-dom";
 import React from "react";
 import Description from "./Description";
 import PlayableMaze from "./PlayableMaze";
-import "./Gameplay.css"
+import "./GameScreen.css"
 
 import arrowUp from "./buttons/arrow_up.png";
 import arrowRight from "./buttons/arrow_right.png";
 import arrowDown from "./buttons/arrow_down.png";
 import arrowLeft from "./buttons/arrow_left.png";
 
-class Gameplay{
+class GameScreen {
 
     constructor(){
 
         this.descriptionDiv = Description;
-        this.playableMaze = new PlayableMaze(20, 20, false);
+        this.playableMaze = new PlayableMaze(20, 20);
 
 
         this.checkWin = () => {
@@ -104,10 +104,12 @@ class Gameplay{
             this.getDiv(),
             document.getElementById("root")
         );
+
+        console.log(this.playableMaze.arrayJSX);
         //this.checkWin();
     }
 
 }
 
 
-export default Gameplay;
+export default GameScreen;
