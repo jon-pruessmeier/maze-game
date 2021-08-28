@@ -125,8 +125,7 @@ class Field {
         let left = wallInfoBorders[3];
 
         let borders = {
-            borderStyle: `${top} ${right} ${bottom} ${left}`,
-            borderWidth: "1px"
+            borderStyle: `${top} ${right} ${bottom} ${left}`
         }
 
         const playerJSX = (<div id="player"></div>);
