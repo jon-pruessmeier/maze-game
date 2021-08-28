@@ -66,7 +66,7 @@ class Maze {
 
         //deleting the walls at the left-border:
         for (let i = 0; i < this.maze[0].length; i++){
-            this.maze[i][0].info.walls.bottom = false;
+            this.maze[i][0].info.walls.left = false;
         }
 
     }
