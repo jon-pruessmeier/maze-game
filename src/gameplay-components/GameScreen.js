@@ -41,10 +41,10 @@ class GameScreen {
             this.render();
         }
 
-        this.buttonUp = <button onClick={this.up} key={"upButton"}><img src={arrowUp} alt={"arrow-up button"} width="70" height="105"/></button>;
-        this.buttonRight = <button onClick={this.right} key={"rightButton"}><img src={arrowRight} alt={"arrow-right button"} width="105" height="70"/></button>;
-        this.buttonDown = <button onClick={this.down} key={"leftButton"}><img src={arrowDown} alt={"arrow-down button"} width="70" height="105"/></button>;
-        this.buttonLeft = <button onClick={this.left} key={"downButton"}><img src={arrowLeft} alt={"arrow-left button"} width="105" height="70"/></button>;
+        this.buttonUp = <button onClick={this.up} key={"upButton"}><img src={arrowUp} className={"buttonTopDown"} alt={"arrow-up button"} /*width="70" height="105"*//></button>;
+        this.buttonRight = <button onClick={this.right} key={"rightButton"}><img src={arrowRight} className={"buttonRightLeft"} alt={"arrow-right button"} /*width="70" height="105"*//></button>;
+        this.buttonDown = <button onClick={this.down} key={"leftButton"}><img src={arrowDown} className={"buttonTopDown"} alt={"arrow-down button"} /*width="70" height="105"*//></button>;
+        this.buttonLeft = <button onClick={this.left} key={"downButton"}><img src={arrowLeft} className={"buttonRightLeft"} alt={"arrow-left button"} /*width="70" height="105"*//></button>;
         this.navField = this.createButtonDiv();
 
         this.updateDiv = () => {
