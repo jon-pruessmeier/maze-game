@@ -23,21 +23,41 @@ border-color: darkgrey;
 
 }
 
+.description{
+    margin: 0;
+    padding: 0;
+    width: 25vw;
+    height: 35vw;
+    border-style: solid;
+    border-width: 4px;
+    background-color: floralwhite;
+    overflow: auto;
+
+
+}
+
 h2, h4{
-    margin: 4px 10px;
+    margin: 0.8vh 1vw 0vh 1vw;
     font-family: 'Kaisei Decol', serif;
+    text-align: center;
+
 }
 
-p{
-    margin: 4px 10px;
-    padding: 1px;
+p {
+    margin: 1vh 0.8vw;
     font-family: 'Kaisei Decol', serif;
-    font-size: 1.02em;
+    font-size: medium;
+    font-weight: 500;
+    text-align: justify;
 }
 
+#fun{
+    font-size: 25px;
+    text-align: center;
+}
 
 .mazeContainer{
-    margin: 1vw;
+    margin: 1.5vw;
     padding: 0;
     width: min-content;
     height: 100%;
@@ -56,21 +76,8 @@ The CSS-properties of the fields are defined in src/mazebuilder-components/Field
     width: 45vw;
     grid-template-columns: repeat(20, 1fr);
     border-style: solid;
-    border-width: 8px;
+    border-width: 0.6vw;
 }
-
-.description{
-    margin: 0;
-    padding: 0;
-    width: 25vw;
-    height: fit-content;
-    border-style: solid;
-    border-width: 4px;
-    background-color: floralwhite;
-    text-align: left;
-
-}
-
 
 .buttonContainer{
     margin: 0;

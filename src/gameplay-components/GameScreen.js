@@ -48,6 +48,7 @@ class GameScreen {
         this.navField = this.createButtonDiv();
 
         this.updateDiv = () => {
+
             this.mazeDiv = this.playableMaze.getDivElement();
             return (<div className={"gameScreen"}>
                 {this.descriptionDiv}
