@@ -19,7 +19,7 @@ const Description = (
                 it backtracks until a field is found that has at least one unvisited adjacent field.
                 This is how dead ends in the maze are created. The termination condition of the recursion is a counter of all unvisited fields.
             </p>
-            <p>
+            <p id={"link"}>
                 See also:  <a href="https://en.wikipedia.org/wiki/Backtracking#:~:text=Backtracking%20is%20a%20general%20algorithm,completed%20to%20a%20valid%20solution.">
                 wikipedia.org/wiki/Backtracking</a>
             </p>

@@ -32,8 +32,6 @@ border-color: darkgrey;
     border-width: 4px;
     background-color: floralwhite;
     overflow: auto;
-
-
 }
 
 h2, h4{
@@ -51,9 +49,8 @@ p {
     text-align: justify;
 }
 
-#fun{
-    font-size: 25px;
-    text-align: center;
+#link{
+    text-align: left;
 }
 
 .mazeContainer{
