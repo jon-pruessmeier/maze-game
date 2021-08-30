@@ -1,3 +1,8 @@
+# The Maze Game
+
+This project is a React-App which builds a playable maze with the help of a backtracking algorithm. The user can take control of the small green box and try to bring it to the red target. Try it yourself!
+
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
